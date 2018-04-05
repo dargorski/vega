@@ -11,28 +11,15 @@ using vegaa.Persistence;
 namespace vegaa.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    partial class VegaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180405112504_ApplyConstraints")]
+    partial class ApplyConstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("vegaa.Models.Feature", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("id");
-
-                    b.ToTable("Features");
-                });
 
             modelBuilder.Entity("vegaa.Models.Make", b =>
                 {
