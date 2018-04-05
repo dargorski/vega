@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using vegaa.Models;
 
 namespace vegaa.Persistence
 {
@@ -8,5 +9,7 @@ namespace vegaa.Persistence
             : base(options)
             {
             }
+
+            public DbSet <Make> Makes { get; set; }
     }
 }
