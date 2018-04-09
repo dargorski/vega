@@ -1,9 +1,8 @@
 namespace vegaa.Controllers.Resources
 {
-    public class ModelResource
+    public class KeyValuePairResource
     {
         public int id { get; set; }
-        public string Name { get; set; }
-
+        public string name { get; set; }
     }
 }

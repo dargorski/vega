@@ -27,6 +27,7 @@ namespace vegaa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddMvc();
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
         }
