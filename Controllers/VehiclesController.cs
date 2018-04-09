@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using vegaa.Controllers.Resources;
 using vegaa.Models;
 using vegaa.Persistence;
@@ -25,6 +26,14 @@ namespace vegaa.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            /* inform API user why request finished with bad request - we don't need that since all Models will be in dropdown list
+            var model = await context.Models.FindAsync(vehicleResource.ModelId);
+            if (model == null)
+            {
+                ModelState.AddModelError("ModelId", "Invalid modelId");
+                return BadRequest(ModelState);
+            } */
+
 
             //buisness validation
             /*if(statement)
@@ -40,6 +49,50 @@ namespace vegaa.Controllers
 
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
             return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehicleResource vehicleResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
+
+            if(vehicle == null){
+                return NotFound();
+            }
+
+            mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
+            vehicle.LastUpdate = DateTime.Now;
+
+            await context.SaveChangesAsync();
+
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+            return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehicle(int id){
+            var vehicle = await context.Vehicles.FindAsync(id);
+
+            if(vehicle == null){
+                return NotFound();
+            }
+            context.Remove(vehicle);
+            await context.SaveChangesAsync();
+
+            return Ok(id);
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicle(int id){
+            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
+
+            if(vehicle == null){
+                return NotFound();
+            }
+
+            var vehicleResource = mapper.Map<Vehicle, VehicleResource>(vehicle);
+            return Ok(vehicleResource);
         }
     }
 }
