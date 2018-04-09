@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using vegaa.Persistence;
+using vegaa.Core;
 using AutoMapper;
 
 namespace vegaa
@@ -28,6 +29,7 @@ namespace vegaa
         {
             services.AddAutoMapper();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc();
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
         }
