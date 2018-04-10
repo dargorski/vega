@@ -39,6 +39,7 @@ Raven.config('https://3adf91ca6047486ab3d6aba492a12623@sentry.io/1186464').insta
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'vehicles/new', component: VehicleFormComponent},
+            { path: 'vehicles/:id', component: VehicleFormComponent},
             { path: '**', redirectTo: 'home' }
         ])
     ],
