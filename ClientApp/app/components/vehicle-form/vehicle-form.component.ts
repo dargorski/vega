@@ -1,9 +1,12 @@
+import * as _ from 'underscore';
+import { SaveVehicle, Vehicle } from '../../models/vehicle';
 import { VehicleService } from './../../services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
+
 
 @Component({
   selector: 'app-vehicle-form',
@@ -15,9 +18,17 @@ export class VehicleFormComponent implements OnInit {
   makes;
   models;
   features;
-  vehicle: any = {
+  vehicle: SaveVehicle = {
+    id: 0,
+    makeId: 0,
+    modelId: 0,
+    isRegistered: false,
     features: [],
-    contact: {}
+    contact: {
+      name:'',
+      email:'',
+      phone:''
+    }
   };
 
   constructor(
@@ -25,9 +36,9 @@ export class VehicleFormComponent implements OnInit {
     private router: Router,
     private vehicleService: VehicleService,
     private toastyService: ToastyService) { 
-      route.paramMap.subscribe(p => {
-        if(p.get('id'))
-          this.vehicle.id = p.get('id');
+      route.params.subscribe(p => {
+        if(p['id'])
+          this.vehicle.id = +p['id'];
       });
     }
 
@@ -42,10 +53,11 @@ export class VehicleFormComponent implements OnInit {
     sources.push(this.vehicleService.getVehicle(this.vehicle.id));
 
     Observable.forkJoin(sources).subscribe(data =>{
-      this.makes = data[1];
       this.features = data[0];
-      if(this.vehicle.id)
-        this.vehicle = data[2];
+      this.makes = data[1];      
+      if(this.vehicle.id){
+        this.setVehicle(data[2]);
+      }
     }, err => {
       if (err.status == 404)
           this.router.navigate(['/home']);
@@ -68,6 +80,16 @@ export class VehicleFormComponent implements OnInit {
   //   this.vehicleService.getFeatures().subscribe(features => {
   //     this.features = features;
   //   })
+   }
+
+
+   private setVehicle(v: Vehicle){
+    this.vehicle.id = v.id;
+    this.vehicle.makeId = v.make.id;
+    this.vehicle.modelId = v.model.id;
+    this.vehicle.isRegistered = v.isRegistered;
+    this.vehicle.contact = v.contact;
+    this.vehicle.features = _.pluck(v.features, 'id');
    }
 
   onMakeChange(){
