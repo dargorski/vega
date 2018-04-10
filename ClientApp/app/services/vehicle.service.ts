@@ -18,4 +18,9 @@ getFeatures(){
         .map(res => res.json());
 }
 
+create(vehicle){
+    return this.http.post('/api/vehicles', vehicle)
+        .map(res => res.json());
+}
+
 }
