@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using vegaa.Models;
 using vegaa.Core;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace vegaa.Persistence
 {
@@ -37,13 +38,19 @@ namespace vegaa.Persistence
             context.Remove(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetVehicles(){
-            return await context.Vehicles
+        public async Task<IEnumerable<Vehicle>> GetVehicles(Filter filter){
+            var query = context.Vehicles
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
                 .Include(v => v.Features)
                     .ThenInclude(vf => vf.Feature)
-                .ToListAsync();
+                .AsQueryable();
+            
+            if(filter.MakeId.HasValue)
+                query = query.Where(v => v.Model.MakeId == filter.MakeId.Value);
+
+            return await query.ToListAsync();
+                
         }
     }
 }
