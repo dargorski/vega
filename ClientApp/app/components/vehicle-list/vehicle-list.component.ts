@@ -24,8 +24,19 @@ export class VehicleListComponent implements OnInit {
       .subscribe(vehicles => this.vehicles = this.allVehicles = vehicles);
   }
 
-  onFilterChange(){
-    this.filter.makeId
+  onFilterChange(){ //this and resetFilter() - client side filtering
+    var vehicles = this.allVehicles;
+
+    if(this.filter.makeId)
+      vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
+
+
+    this.vehicles = vehicles;
+  }
+
+  resetFilter(){
+    this.filter = {};
+    this.onFilterChange();
   }
 
 }
