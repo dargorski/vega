@@ -7,6 +7,7 @@ using vegaa.Controllers.Resources;
 using vegaa.Models;
 using vegaa.Persistence;
 using vegaa.Core;
+using System.Collections.Generic;
 
 namespace vegaa.Controllers
 {
@@ -107,6 +108,13 @@ namespace vegaa.Controllers
 
             var vehicleResource = mapper.Map<Vehicle, VehicleResource>(vehicle);
             return Ok(vehicleResource);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<VehicleResource>> GetVehicles(){
+            var vehicles = await repository.GetVehicles();
+
+            return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
         }
     }
 }

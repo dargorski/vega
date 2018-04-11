@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using vegaa.Models;
 using vegaa.Core;
+using System.Collections.Generic;
 
 namespace vegaa.Persistence
 {
@@ -34,6 +35,15 @@ namespace vegaa.Persistence
         public void Remove(Vehicle vehicle)
         {
             context.Remove(vehicle);
+        }
+
+        public async Task<IEnumerable<Vehicle>> GetVehicles(){
+            return await context.Vehicles
+                .Include(v => v.Model)
+                    .ThenInclude(m => m.Make)
+                .Include(v => v.Features)
+                    .ThenInclude(vf => vf.Feature)
+                .ToListAsync();
         }
     }
 }
