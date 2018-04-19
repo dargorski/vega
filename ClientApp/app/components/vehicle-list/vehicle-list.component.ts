@@ -9,7 +9,7 @@ import { Vehicle } from '../../models/vehicle';
 })
 export class VehicleListComponent implements OnInit {
 
-  private readonly PAGE_SIZE = 3;
+  private readonly PAGE_SIZE = 8;
 
   queryResult = {};
   makes;
