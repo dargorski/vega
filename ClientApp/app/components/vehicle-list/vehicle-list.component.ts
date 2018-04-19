@@ -10,9 +10,9 @@ import { Vehicle } from '../../models/vehicle';
 export class VehicleListComponent implements OnInit {
 
   vehicles;
-  allVehicles;
   makes;
   filter: any ={};
+  allVehicles;
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -20,18 +20,16 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getMakes()
       .subscribe(makes => this.makes = makes);
 
-    this.vehicleService.getVehicles()
-      .subscribe(vehicles => this.vehicles = this.allVehicles = vehicles);
+    this.populateVehicles();
+  }
+
+  populateVehicles(){
+    this.vehicleService.getVehicles(this.filter)
+      .subscribe(vehicles => this.vehicles = vehicles);
   }
 
   onFilterChange(){ //this and resetFilter() - client side filtering
-    var vehicles = this.allVehicles;
-
-    if(this.filter.makeId)
-      vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
-
-
-    this.vehicles = vehicles;
+    this.populateVehicles();
   }
 
   resetFilter(){
