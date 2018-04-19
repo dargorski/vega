@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using vegaa.Controllers.Resources;
+using vegaa.Core.Models;
 using vegaa.Models;
 
 namespace vegaa.Mapping
@@ -11,6 +12,7 @@ namespace vegaa.Mapping
         public MappingProfile()
         {
             //Domain to API Resource
+            CreateMap(typeof(QueryResult<>),typeof(QueryResultResource<>));
             CreateMap<Make, MakeResource>();
             CreateMap<Make, KeyValuePairResource>();
             CreateMap<Model, KeyValuePairResource>();

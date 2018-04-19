@@ -9,7 +9,7 @@ import { Vehicle } from '../../models/vehicle';
 })
 export class VehicleListComponent implements OnInit {
 
-  vehicles;
+  queryResult = {};
   makes;
   query: any ={
     pageSize: 3
@@ -33,7 +33,7 @@ export class VehicleListComponent implements OnInit {
 
   populateVehicles(){
     this.vehicleService.getVehicles(this.query)
-      .subscribe(vehicles => this.vehicles = vehicles);
+      .subscribe(result => this.queryResult = result);
   }
 
   onFilterChange(){ //this and resetFilter() - client side filtering

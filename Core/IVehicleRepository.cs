@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using vegaa.Core.Models;
 using vegaa.Models;
 
 namespace vegaa.Core
@@ -10,6 +11,6 @@ namespace vegaa.Core
          void Add(Vehicle vehicle);
          void Remove(Vehicle vehicle);
 
-         Task<IEnumerable<Vehicle>> GetVehicles(VehicleQuery filter);
+         Task<QueryResult<Vehicle>> GetVehicles(VehicleQuery filter);
     }
 }
