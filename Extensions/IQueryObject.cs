@@ -5,5 +5,9 @@ namespace vegaa.Extensions
         string SortBy { get; set; }
 
         bool isSortAscending { get; set; }
+
+        int Page {get;set;}
+
+        byte PageSize {get;set;}
     }
 }

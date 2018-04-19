@@ -12,5 +12,8 @@ namespace vegaa.Models
 
         public bool isSortAscending { get; set; }
 
+        public int Page { get; set; }
+        public byte PageSize { get; set; }
+
     }
 }
