@@ -1,4 +1,3 @@
-
 import * as Raven from 'raven-js';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,6 +16,7 @@ import { AppErrorHandler } from './components/app/app.error-handler';
 
 import { VehicleService } from './services/vehicle.service';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 Raven.config('https://3adf91ca6047486ab3d6aba492a12623@sentry.io/1186464').install();
 
@@ -28,7 +28,8 @@ Raven.config('https://3adf91ca6047486ab3d6aba492a12623@sentry.io/1186464').insta
         FetchDataComponent,
         HomeComponent,
         VehicleFormComponent,
-        VehicleListComponent
+        VehicleListComponent,
+        PaginationComponent
 
 ],
     imports: [
