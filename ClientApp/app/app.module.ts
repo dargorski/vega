@@ -15,6 +15,7 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
 import { AppErrorHandler } from './components/app/app.error-handler';
 
 import { VehicleService } from './services/vehicle.service';
+import { PhotoService } from './services/photo.service';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
@@ -54,6 +55,7 @@ Raven.config('https://3adf91ca6047486ab3d6aba492a12623@sentry.io/1186464').insta
     providers: [
         {provide: ErrorHandler, useClass: AppErrorHandler},
         VehicleService,
+        PhotoService
     ]
 })
 export class AppModuleRoot {
