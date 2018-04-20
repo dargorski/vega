@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using vegaa.Persistence;
 using vegaa.Core;
 using AutoMapper;
+using vegaa.Core.Models;
 
 namespace vegaa
 {
@@ -28,6 +29,7 @@ namespace vegaa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper();
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc();
