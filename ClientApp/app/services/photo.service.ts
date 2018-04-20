@@ -11,7 +11,11 @@ constructor(private http: Http) { }
         formData.append('file',photo);
         return this.http.post(`/api/vehicles/${vehicleId}/photos`, formData)
             .map(res => res.json());
+    }
 
+    getPhotos(vehicleId){
+        return this.http.get(`/api/vehicles/${vehicleId}/photos`)
+            .map(res => res.json());
     }
 
 }
